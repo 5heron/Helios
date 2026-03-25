@@ -1,0 +1,80 @@
+{
+  "model_paths": {
+    "xgb_q50": "heliosai_v12_artifacts\\xgb_q50.json",
+    "xgb_q25": "heliosai_v12_artifacts\\xgb_q25.json",
+    "xgb_q75": "heliosai_v12_artifacts\\xgb_q75.json",
+    "lstm": "heliosai_v12_artifacts\\expert_lstm.keras",
+    "tabtransformer": "heliosai_v12_artifacts\\expert_tabtransformer.keras",
+    "gating_network": "heliosai_v12_artifacts\\gating_network.keras"
+  },
+  "scaler_paths": {
+    "imputer": "heliosai_v12_artifacts\\imputer.save",
+    "scaler_X": "heliosai_v12_artifacts\\scaler_X.save",
+    "scaler_y": "heliosai_v12_artifacts\\scaler_y.save"
+  },
+  "config": {
+    "feature_cols": [
+      "SolarRad",
+      "TempOut",
+      "OutHum",
+      "WindSpeed",
+      "RainRate",
+      "Bar",
+      "dewpoint",
+      "dewpoint_depression",
+      "solar_zenith",
+      "solar_azimuth",
+      "air_mass",
+      "is_day",
+      "poa_global",
+      "clearsky_index",
+      "poa_ratio",
+      "cell_temp",
+      "temp_loss",
+      "irradiance_grad",
+      "irradiance_volatility",
+      "cloud_volatility",
+      "Hour_sin",
+      "Hour_cos",
+      "day_of_year_sin",
+      "day_of_year_cos",
+      "pv_per_kw_lag1",
+      "SolarRad_lag1",
+      "pv_per_kw_lag2",
+      "SolarRad_lag2",
+      "pv_per_kw_lag3",
+      "SolarRad_lag3",
+      "vol_score"
+    ],
+    "n_features": 31,
+    "irr_vol_max": 533.4754,
+    "vol_thresholds": {
+      "p33": 0.309,
+      "p66": 0.543
+    },
+    "aggregated": true,
+    "note": "Train on hourly-mean aggregated data to remove multi-system noise",
+    "uncertainty_gate": {
+      "unc_min": -0.00458298996090889,
+      "unc_max": 0.44940468668937683,
+      "unc_p33": 0.03727097809314728,
+      "unc_p66": 0.07294657081365585,
+      "source": "xgb_q75_pred - xgb_q25_pred",
+      "note": "Normalise incoming uncertainty to [0,1] before gate input"
+    }
+  },
+  "preprocessing": {
+    "aggregate_to_hourly_mean": true,
+    "reason": "Removes multi-system noise (5 PV systems per timestamp)"
+  },
+  "inference_flow": [
+    "1. Preprocess incoming weather data",
+    "2. Run xgb_q25, xgb_q50, xgb_q75",
+    "3. uncertainty = xgb_q75_pred - xgb_q25_pred",
+    "4. unc_norm = (uncertainty - unc_min) / (unc_max - unc_min)",
+    "5. expert_id = argmax(gating_network.predict([[unc_norm]]))",
+    "6. if expert_id==0: return xgb_q50_pred",
+    "7. if expert_id==1: return lstm.predict(features)",
+    "8. if expert_id==2: return tabtransformer.predict(features)"
+  ]
+}

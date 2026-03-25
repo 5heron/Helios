@@ -1,0 +1,43 @@
+{
+  "feature_cols": [
+    "SolarRad",
+    "TempOut",
+    "OutHum",
+    "WindSpeed",
+    "RainRate",
+    "Bar",
+    "dewpoint",
+    "dewpoint_depression",
+    "solar_zenith",
+    "solar_azimuth",
+    "air_mass",
+    "is_day",
+    "poa_global",
+    "clearsky_index",
+    "poa_ratio",
+    "cell_temp",
+    "temp_loss",
+    "irradiance_grad",
+    "irradiance_volatility",
+    "cloud_volatility",
+    "Hour_sin",
+    "Hour_cos",
+    "day_of_year_sin",
+    "day_of_year_cos",
+    "pv_per_kw_lag1",
+    "SolarRad_lag1",
+    "pv_per_kw_lag2",
+    "SolarRad_lag2",
+    "pv_per_kw_lag3",
+    "SolarRad_lag3",
+    "vol_score"
+  ],
+  "n_features": 31,
+  "irr_vol_max": 533.4754,
+  "vol_thresholds": {
+    "p33": 0.309,
+    "p66": 0.543
+  },
+  "aggregated": true,
+  "note": "Train on hourly-mean aggregated data to remove multi-system noise"
+}

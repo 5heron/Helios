@@ -1,0 +1,112 @@
+# ========================
+# Python / FastAPI
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+wheels/
+.installed.cfg
+lib/
+lib64/
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# ========================
+# ML / Tensor stuff
+# ========================
+# Model weights & checkpoints
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.hdf5
+*.pb
+*.onnx
+*.tflite
+*.bin
+*.safetensors
+
+# Training runs / logs
+runs/
+logs/
+wandb/
+mlruns/
+lightning_logs/
+outputs/
+checkpoints/
+
+# Datasets
+data/
+datasets/
+*.csv
+*.parquet
+*.npy
+*.npz
+*.pkl
+*.pickle
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# ========================
+# React / Node
+# ========================
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
+*.tsbuildinfo
+
+# Package locks (keep one, ignore the other)
+# Uncomment whichever you're NOT using:
+# package-lock.json
+# yarn.lock
+
+# ========================
+# IDEs & Editors
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ========================
+# Misc
+# ========================
+*.log
+*.tmp
+*.bak
+coverage/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
