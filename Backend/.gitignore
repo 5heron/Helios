@@ -1,0 +1,62 @@
+# ========================
+# Python / FastAPI
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# ========================
+# Machine Learning / TensorFlow / XGBoost
+# ========================
+# Large model files (uncomment only if they become huge)
+# heliosai_v12_artifacts/
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.hdf5
+*.pb
+*.onnx
+*.tflite
+*.bin
+*.safetensors
+
+# Training artifacts & logs
+runs/
+logs/
+wandb/
+mlruns/
+lightning_logs/
+outputs/
+checkpoints/
+
+# Datasets & cached data
+data/
+datasets/
+*.csv
+*.parquet
+*.npy
+*.npz
+*.pkl
+*.pickle
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Misc
+*.tmp
+*.bak
