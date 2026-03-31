@@ -4,7 +4,7 @@ import { fetchWeatherApi } from "openmeteo";
 import bgLogo from "../assets/HeliosAI_Basic_BG_Logo.png";
 import "../App.css";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "http://35.244.33.212:8000";
 
 const Icon = {
   thermometer: (

@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { fetchWeatherApi } from "openmeteo";
 import "../App.css";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "http://35.244.33.212:8000";
 
 interface WeatherSnapshot {
   temp: number;
@@ -414,7 +414,7 @@ export default function Explore() {
       zoomControl: true,
     });
 
-    // Dark-ish OSM tile style (Stadia Alidade Smooth Dark — free, no key needed)
+    // Dark-ish OSM tile style (Stadia Alidade Smooth Dark)
     L.tileLayer(
       "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
       {
@@ -484,15 +484,12 @@ export default function Explore() {
         </div>
       </nav>
 
-      {/* Body */}
       <div className="explore-body">
-        {/* Map */}
         <div className="explore-map-wrap">
           <div ref={mapRef} className="explore-map" />
           <div className="explore-map-hint">Click anywhere to query</div>
         </div>
 
-        {/* Side panel */}
         <SidePanel data={panelData} loading={loading} error={error} />
       </div>
     </div>

@@ -11,6 +11,90 @@ interface ChartPoint {
   label: string;
   pv: number;
 }
+function DailyYieldCard({ points }: { points: HourlyPoint[] }) {
+  const [systemKw, setSystemKw] = useState(4);
+
+  const now = new Date();
+  const todayPoints = points.filter(
+    (p) => p.time.toDateString() === now.toDateString(),
+  );
+
+  const totalYield = todayPoints.reduce((sum, p) => sum + p.pv, 0) * systemKw;
+  const completed = todayPoints.filter((p) => p.time <= now).length;
+  const remaining = todayPoints.filter((p) => p.time > now).length;
+  const soFar =
+    todayPoints.filter((p) => p.time <= now).reduce((sum, p) => sum + p.pv, 0) *
+    systemKw;
+
+  return (
+    <div className="result-chart-card">
+      <div className="result-chart-header">
+        <div className="result-chart-title">Daily Energy Yield</div>
+        <div className="result-chart-subtitle">
+          Estimated output for a {systemKw}kW system
+        </div>
+      </div>
+
+      {/* Installed capacity input */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+          marginBottom: "1rem",
+        }}
+      >
+        <span style={{ fontSize: "0.8rem", color: "#888" }}>
+          Installed capacity
+        </span>
+        <input
+          type="number"
+          min={0.5}
+          max={100}
+          step={0.5}
+          value={systemKw}
+          onChange={(e) =>
+            setSystemKw(Math.max(0.5, parseFloat(e.target.value) || 4))
+          }
+          style={{
+            background: "transparent",
+            border: "1px solid rgba(255,255,255,0.15)",
+            borderRadius: "6px",
+            color: "inherit",
+            fontSize: "1rem",
+            fontWeight: "600",
+            padding: "4px 8px",
+            width: "70px",
+            textAlign: "center",
+          }}
+        />
+        <span style={{ fontSize: "0.8rem", color: "#888" }}>kW</span>
+      </div>
+
+      <div className="result-stats-row">
+        <div className="result-stat-card">
+          <div className="result-stat-label">Total Today</div>
+          <div className="result-stat-value result-stat-value--yellow">
+            {totalYield.toFixed(2)}
+          </div>
+          <div className="result-stat-unit">kWh</div>
+        </div>
+        <div className="result-stat-card">
+          <div className="result-stat-label">Generated So Far</div>
+          <div className="result-stat-value">{soFar.toFixed(2)}</div>
+          <div className="result-stat-unit">kWh · {completed}hrs</div>
+        </div>
+        <div className="result-stat-card">
+          <div className="result-stat-label">Still Expected</div>
+          <div className="result-stat-value result-stat-value--blue">
+            {(totalYield - soFar).toFixed(2)}
+          </div>
+          <div className="result-stat-unit">kWh · {remaining}hrs</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function getRating(pv: number) {
   if (pv > 0.7) return { label: "Excellent", cls: "rating--excellent" };
@@ -301,7 +385,7 @@ export default function Result() {
       {/* Hero card */}
       <div className={`result-hero-card ${rating.cls}`}>
         <div className="result-hero-left">
-          <div className="result-hero-label">⚡ Current Predicted Output</div>
+          <div className="result-hero-label"> Current Predicted Output</div>
           <div className="result-hero-value">{pvOutput.toFixed(4)}</div>
           <div className="result-hero-unit">kW per kW installed capacity</div>
         </div>
@@ -338,6 +422,7 @@ export default function Result() {
 
       {/* Today's hourly chart */}
       <div className="result-chart-card">
+        <DailyYieldCard points={points} />
         <div className="result-chart-header">
           <div className="result-chart-title">☀ Hourly PV Output — Today</div>
           <div className="result-chart-subtitle">
