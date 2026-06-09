@@ -68,7 +68,6 @@ datasets/
 
 # Jupyter
 .ipynb_checkpoints/
-*.ipynb
 
 # ========================
 # React / Node
